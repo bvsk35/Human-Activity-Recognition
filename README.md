@@ -18,5 +18,5 @@ Running the code is straightforward. Only the `data_paths` must be changed accor
 ![Accuracy](images/Acc.jpeg)
 #### Confusion Matrix: possible confusion between labels clapping hands and waving hands, boxing
 ![Confusion Matrix](images/Confusion.jpeg)
-#### Test video predictions
+#### Test video predictions [link](https://youtu.be/G_8_L7a7mLI)
 ![Predictions](images/Test1.jpeg)
