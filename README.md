@@ -8,7 +8,7 @@ Running the code is straightforward. Only the `data_paths` must be changed accor
 - Paste above files in convient location of your choice. Then change the following variables present in `RNN_Human_Activity_Recognition.ipynb`.
   - Change `data_path = '/content/gdrive/My Drive/Deep Learning/MHAD/'` to where the text files are saved. And run the code to train. 
   - `X_train.txt`, `X_test.txt`, `Y_train.txt`, and `Y_test.txt` are training and testing files. `datapoint_1.txt`, `datapoint_2.txt`, `datapoint_3.txt`, `datapoint_4.txt`, and `datapoint_5.txt` are the video files on which prediction was shown. 
-  - Labels in the data set: jumping, jumping jacks, boxing, waving one hand, waving two hands, and clapping hands.
+  - Labels in the data set: `jumping, jumping jacks, boxing, waving one hand, waving two hands, and clapping hands`
 ### How to generate data from a sample video?
 - In this repo under the folder `misc` I have uploaded many helper codes. For currently the data provided [here](https://tele-immersion.citris-uc.org/berkeley_mhad) are `.pgm` files for each frame. To get a video out of these frames first run the `ConvertPGMtoPNG.ipynb` (do necessary changes in the file) on all `.pgm` files to get `.png` files. Then run following command in terminal to convert all the `.png` files to a video `ffmpeg -i %0d.png -vcodec libx264 --pix_fmt yuv420p test.mp4`
 - If you have video then please first run Openpose on it and save all the body landmarks in `.json` files. Store them in a folder.
