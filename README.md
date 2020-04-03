@@ -20,8 +20,8 @@ Running the code is straightforward. Only the `data_paths` must be changed accor
 Please go to my google drive [link](https://drive.google.com/open?id=192z92yZSQwaWbhjAHMumah09bmry6saH) and then go to the `checkpoints\Project Submission 4` folder. There I have uploaded the latest trained weights of the model. I am still figuring out how to load to trained model directly and do predictions using it. 
 ### Results
 #### Accuracy on Test set: 97%
-![Accuracy](images/Acc.jpeg)
+![Accuracy](images/Project Submission 4/Acc.jpeg)
 #### Confusion Matrix: possible confusion between labels clapping hands and waving hands, boxing
-![Confusion Matrix](images/Confusion.jpeg)
+![Confusion Matrix](images/Project Submission 4/Confusion.jpeg)
 #### Test video predictions [link](https://youtu.be/G_8_L7a7mLI)
-![Predictions](images/Test1.jpeg)
+![Predictions](images/Project Submission 4/Test1.jpeg)
