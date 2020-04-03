@@ -22,6 +22,6 @@ Please go to my google drive [link](https://drive.google.com/open?id=192z92yZSQw
 #### Accuracy on Test set: 97%
 ![Accuracy](images/Project%20Submission%204/Acc.jpeg)
 #### Confusion Matrix: possible confusion between labels clapping hands and waving hands, boxing
-![Confusion Matrix](images/Project Submission 4/Confusion.jpeg)
+![Confusion Matrix](images/Project%20Submission%204/Confusion.jpeg)
 #### Test video predictions [link](https://youtu.be/G_8_L7a7mLI)
-![Predictions](images/Project Submission 4/Test1.jpeg)
+![Predictions](images/Project%20Submission%204/Test1.jpeg)
