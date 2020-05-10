@@ -44,23 +44,23 @@ if arg.generate_data:
 	openpose_2person_count = 0
 
 	for file in sorted(glob.glob("*.json")):
-	    with open(file) as data_file: 
-	        data = json.load(data_file)
-	        if len(data["people"]) > 1:
-	            pprint("More than one detection in file, check the noise:")
-	            openpose_2person_count += 1
-	            print(file)
-	        frame_kps = []
-	        pose_keypoints = data["people"][0]["pose_keypoints_2d"]
-	        j = 0
-	        for i in range(36):
-	            frame_kps.append(pose_keypoints[j])
-	            j += 1
-	            if (j+1)%3 == 0:
-	                j += 1
-	        kps.append(frame_kps)
+		with open(file) as data_file: 
+			data = json.load(data_file)
+			if len(data["people"]) > 1:
+				pprint("More than one detection in file, check the noise:")
+				openpose_2person_count += 1
+				print(file)
+			frame_kps = []
+			pose_keypoints = data["people"][0]["pose_keypoints_2d"]
+			j = 0
+			for i in range(36):
+				frame_kps.append(pose_keypoints[j])
+				j += 1
+				if (j+1)%3 == 0:
+					j += 1
+			kps.append(frame_kps)
 
-    # Check the shape of the data
+	# Check the shape of the data
 	kps_np = np.array(kps)
 	print('Chekc the shape of data: ', kps_np.shape)
 	print(len(kps))
@@ -75,45 +75,45 @@ if arg.generate_data:
 	'''
 	file_name = "test_video" + ".txt"
 	with open(file_name, "w") as text_file:
-	    for i in range(len(kps)):
-	        for j in range(36):
-	            text_file.write('{}'.format(kps[i][j]))
-	            if j < 35:
-	                text_file.write(',')
-	        text_file.write('\n')
+		for i in range(len(kps)):
+			for j in range(36):
+				text_file.write('{}'.format(kps[i][j]))
+				if j < 35:
+					text_file.write(',')
+			text_file.write('\n')
 
-    '''
-    Convert .txt file into a testing data point
-    num_steps depends on rate of video and window_width to be used in this case camera was 22Hz 
-    and a window_width of 1.5s was wanted, giving 22*1.5 = 33
+	'''
+	Convert .txt file into a testing data point
+	num_steps depends on rate of video and window_width to be used in this case camera was 22Hz 
+	and a window_width of 1.5s was wanted, giving 22*1.5 = 33
 	'''
 	num_steps = 32
 	overlap = 0.8125 # 0 = 0% overlap, 1 = 100%
 
 	for file in sorted(glob.glob("*.txt")):
-	    data_file = open(file,'r')
-	    file_text = data_file.readlines() 
-	    num_frames = len(file_text)
-	    num_framesets = int((num_frames - num_steps)/(num_steps*(1-overlap)))+1
-	    data_file.close
-	    file_name = "data_point" + ".txt"
-	    x_file = open(file_name, 'a')
-	    for frameset in range(0, num_framesets):
-	        start = int(frameset*num_steps*(1-overlap))
-	        for line in range(start,(start+num_steps)):
-	            x_file.write(file_text[line])
-	    x_file.close()
+		data_file = open(file,'r')
+		file_text = data_file.readlines() 
+		num_frames = len(file_text)
+		num_framesets = int((num_frames - num_steps)/(num_steps*(1-overlap)))+1
+		data_file.close
+		file_name = "data_point" + ".txt"
+		x_file = open(file_name, 'a')
+		for frameset in range(0, num_framesets):
+			start = int(frameset*num_steps*(1-overlap))
+			for line in range(start,(start+num_steps)):
+				x_file.write(file_text[line])
+		x_file.close()
 
-    '''
-    Create time stamps
-    '''
-    file = open(args.video_json_path+'/data_point.txt', 'r')
-    temp = np.array([elem for elem in [row.split(',') for row in file]], dtype=np.float32)
-    file.close()
-    blocks = int(len(temp) / n_steps)
-    temp = np.array(np.split(temp,blocks))
-    a = np.linspace(0, np.around(len(kps)/32), temp.shape[0])
-    np.savetxt('time_stamp.txt', a)
+	'''
+	Create time stamps
+	'''
+	file = open(args.video_json_path+'/data_point.txt', 'r')
+	temp = np.array([elem for elem in [row.split(',') for row in file]], dtype=np.float32)
+	file.close()
+	blocks = int(len(temp) / n_steps)
+	temp = np.array(np.split(temp,blocks))
+	a = np.linspace(0, np.around(len(kps)/32), temp.shape[0])
+	np.savetxt('time_stamp.txt', a)
 else:
 	data_path = args.video_json_path
 
@@ -122,58 +122,58 @@ Running the tests on video
 Model 1:
 '''
 LABELS = [    
-    "JUMPING",
-    "JUMPING_JACKS",
-    "BOXING",
-    "WAVING_2HANDS",
-    "WAVING_1HAND",
-    "CLAPPING_HANDS"
+	"JUMPING",
+	"JUMPING_JACKS",
+	"BOXING",
+	"WAVING_2HANDS",
+	"WAVING_1HAND",
+	"CLAPPING_HANDS"
 ] 
 
 def load_X(X_path):
-    file = open(X_path, 'r')
-    X_ = np.array([elem for elem in [row.split(',') for row in file]], dtype=np.float32)
-    file.close()
-    blocks = int(len(X_) / 32)
-    X_ = np.array(np.split(X_,blocks))
-    return X_
+	file = open(X_path, 'r')
+	X_ = np.array([elem for elem in [row.split(',') for row in file]], dtype=np.float32)
+	file.close()
+	blocks = int(len(X_) / 32)
+	X_ = np.array(np.split(X_,blocks))
+	return X_
 
 def LSTM_RNN(_X, _weights, _biases):
-    _X = tf.transpose(_X, [1, 0, 2])  # permute n_steps and batch_size
-    _X = tf.reshape(_X, [-1, n_input])   
-    # ReLU activation function
-    _X = tf.nn.relu(tf.matmul(_X, _weights['hidden']) + _biases['hidden'])
-    # Split data because rnn cell needs a list of inputs for the RNN inner loop
-    _X = tf.split(_X, n_steps, 0) 
+	_X = tf.transpose(_X, [1, 0, 2])  # permute n_steps and batch_size
+	_X = tf.reshape(_X, [-1, n_input])   
+	# ReLU activation function
+	_X = tf.nn.relu(tf.matmul(_X, _weights['hidden']) + _biases['hidden'])
+	# Split data because rnn cell needs a list of inputs for the RNN inner loop
+	_X = tf.split(_X, n_steps, 0) 
 
-    # Define two stacked LSTM cells (two recurrent layers deep) with tensorflow
-    # With dropout prob of 0.5 
-    lstm_cell = tf.contrib.rnn.BasicLSTMCell(n_hidden, forget_bias=1.0, state_is_tuple=True)
-    lstm_cell = tf.contrib.rnn.DropoutWrapper(lstm_cell, output_keep_prob=0.5)
-    lstm_cells = tf.contrib.rnn.MultiRNNCell([lstm_cell] * 2, state_is_tuple=True)
-    outputs, states = tf.contrib.rnn.static_rnn(lstm_cells, _X, dtype=tf.float32)
-    outputs = tf.contrib.layers.batch_norm(outputs)
+	# Define two stacked LSTM cells (two recurrent layers deep) with tensorflow
+	# With dropout prob of 0.5 
+	lstm_cell = tf.contrib.rnn.BasicLSTMCell(n_hidden, forget_bias=1.0, state_is_tuple=True)
+	lstm_cell = tf.contrib.rnn.DropoutWrapper(lstm_cell, output_keep_prob=0.5)
+	lstm_cells = tf.contrib.rnn.MultiRNNCell([lstm_cell] * 2, state_is_tuple=True)
+	outputs, states = tf.contrib.rnn.static_rnn(lstm_cells, _X, dtype=tf.float32)
+	outputs = tf.contrib.layers.batch_norm(outputs)
 
-    lstm_last_output = outputs[-1]
-    
-    # Linear activation
-    # return tf.add(tf.matmul(lstm_last_output, _weights['out']), _biases['out'], name='Pred')
-    pred = tf.matmul(lstm_last_output, _weights['out']) + _biases['out']
-    return pred
+	lstm_last_output = outputs[-1]
+	
+	# Linear activation
+	# return tf.add(tf.matmul(lstm_last_output, _weights['out']), _biases['out'], name='Pred')
+	pred = tf.matmul(lstm_last_output, _weights['out']) + _biases['out']
+	return pred
 
 def one_hot(y_):
-    # One hot encoding of the network outputs
-    y_ = y_.reshape(len(y_))
-    n_values = int(np.max(y_)) + 1
-    return np.eye(n_values)[np.array(y_, dtype=np.int32)]  # Returns FLOATS
+	# One hot encoding of the network outputs
+	y_ = y_.reshape(len(y_))
+	n_values = int(np.max(y_)) + 1
+	return np.eye(n_values)[np.array(y_, dtype=np.int32)]  # Returns FLOATS
 
 def tf_reset():
-    try:
-        sess.close()
-    except:
-        pass
-    tf.reset_default_graph()
-    return tf.InteractiveSession(config=tf.ConfigProto(log_device_placement=True))
+	try:
+		sess.close()
+	except:
+		pass
+	tf.reset_default_graph()
+	return tf.InteractiveSession(config=tf.ConfigProto(log_device_placement=True))
 
 test_path = args.load
 sess = tf_reset()
@@ -184,12 +184,12 @@ y = tf.placeholder(tf.float32, [None, n_classes], name='y')
 
 # Graph weights
 weights = {
-    'hidden': tf.Variable(tf.random_normal([n_input, n_hidden]), name='W1'), 
-    'out': tf.Variable(tf.random_normal([n_hidden, n_classes], mean=1.0), name='W2')
+	'hidden': tf.Variable(tf.random_normal([n_input, n_hidden]), name='W1'), 
+	'out': tf.Variable(tf.random_normal([n_hidden, n_classes], mean=1.0), name='W2')
 }
 biases = {
-    'hidden': tf.Variable(tf.random_normal([n_hidden]), name='b1'),
-    'out': tf.Variable(tf.random_normal([n_classes]), name='b2')
+	'hidden': tf.Variable(tf.random_normal([n_hidden]), name='b1'),
+	'out': tf.Variable(tf.random_normal([n_classes]), name='b2')
 }
 
 pred = LSTM_RNN(x, weights, biases)
@@ -222,17 +222,17 @@ frames = extract_frames(args.video_file, args.num_segments)
 
 # Prepare input tensor
 if args.arch == 'resnet3d50':
-    # [1, num_frames, 3, 224, 224]
-    input = torch.stack([transform(frame) for frame in frames], 1).unsqueeze(0)
+	# [1, num_frames, 3, 224, 224]
+	input = torch.stack([transform(frame) for frame in frames], 1).unsqueeze(0)
 else:
-    # [num_frames, 3, 224, 224]
-    input = torch.stack([transform(frame) for frame in frames])
+	# [num_frames, 3, 224, 224]
+	input = torch.stack([transform(frame) for frame in frames])
 
 # Make video prediction
 with torch.no_grad():
-    logits = model(input)
-    h_x = F.softmax(logits, 1).mean(dim=0)
-    probs, idx = h_x.sort(0, True)
+	logits = model(input)
+	h_x = F.softmax(logits, 1).mean(dim=0)
+	probs, idx = h_x.sort(0, True)
 
 # Output prediction on test video
 temp = []

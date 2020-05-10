@@ -1,8 +1,6 @@
 '''
 -- Our loss implementations for wlsep, lsep, warp, bp_mll and bce with optional weighted learning
 --
--- If you use these implementations in your paper please cite our paper https://arxiv.org/abs/1911.00232
---
 -- scores is the output of the model
 -- labels is a binary vector with a 1 indicating a positive class for each batch member
 -- Both scores and labels have size BxC with B = batch size and C = number of classes
@@ -11,7 +9,6 @@
    count_i is the number of examples in the training set with a positive label for class i
    and min(count) is the number of examples with a positive label for the least common class.
 --
--- By Mathew Monfort, mmonfort@mit.edu
 '''
 import torch
 from torch.nn import functional as F
