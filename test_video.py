@@ -205,7 +205,7 @@ saver = tf.train.Saver()
 saver.restore(sess, test_path+"/RNN_Model_Trained.ckpt")
 
 # Output prediction on test video
-test_vid = data_path + 'data_point.txt'
+test_vid = data_path + '/data_point.txt'
 test_vid = load_X(test_vid)
 one_hot_predictions = sess.run([pred], feed_dict={x: test_vid})
 
