@@ -12,18 +12,23 @@ Running the code is straightforward. Only the `data_paths` must be changed accor
   
   
 ## Project Submission 8
+### Trained Model weights
+Please go to my google drive [link](https://drive.google.com/open?id=192z92yZSQwaWbhjAHMumah09bmry6saH) and then go to the `checkpoints\Project Submission 8` folder. There you can find the final trained weights. Please download all the files provided in that folder including `moments_RGB_imagenet_resnet3d50_segment16.pth.tar` and `moments_RGB_resnet50_imagenetpretrained.pth.tar`.
+### Optical Flow
+I have also worked on generating optical flow for the HMDB dataset in the plan of using it. Till now I have not implemented any model using it but I have am planning to use it in the future. But below I have provided the gifs for the videos.
+#### Sample Video
+![Sample Video](https://github.com/bvsk35/Human-Activity-Recognition/blob/master/images/Sample-Video.gif)
+#### Sample Optical Flow Gif
+![Sample Optical Flow](https://github.com/bvsk35/Human-Activity-Recognition/blob/master/images/Sample%20Optical.gif)
 ### How to generate data from a sample video and do prediction
 `ABCD`
-### Trained Model weights
-`ABCD`
-Please go to my google drive [link](https://drive.google.com/open?id=192z92yZSQwaWbhjAHMumah09bmry6saH) and then go to the `checkpoints\Project Submission 4` folder. 
 ### Results
 #### Accuracy on Test set: ~99%
-![Accuracy](images/Project%20Submission%204/Acc.jpeg)
+![Accuracy](images/Project%20Submission%208/Acc1.jpeg)
 #### Confusion Matrix: possible confusion between labels clapping hands and waving hands, boxing
-![Confusion Matrix](images/Project%20Submission%204/Confusion.jpeg)
+![Confusion Matrix](images/Project%20Submission%208/Confusion1.jpeg)
 #### Test video predictions [link](https://youtu.be/G_8_L7a7mLI)
-![Predictions](images/Project%20Submission%204/Test1.jpeg)
+![Predictions](images/Project%20Submission%208/Test11.jpeg)
   
 ## Project Submission 4, 5, and 6
 ### How to generate data from a sample video?
