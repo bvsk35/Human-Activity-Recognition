@@ -23,6 +23,7 @@ parser = argparse.ArgumentParser(description="Test on a single video", formatter
 parser.add_argument('--video_path', help='Path to test video file', type=str, default=None)
 parser.add_argument('--video_json_path', help='Path to openpose JSON files for test video', type=str, default=None)
 parser.add_argument('--load', help='Path for the weights of the trained model', type=str, default=None)
+parser.add_argument('--home_dir', help='Path for main script', type=str, default=None)
 parser.add_argument('--num_segments', type=int, default=16)
 parser.add_argument('--arch', type=str, default='resnet3d50', choices=['resnet50', 'resnet3d50'])
 parser.add_argument('--generate_data', help='Generate the data for test video', default=True)
@@ -212,6 +213,10 @@ one_hot_predictions = sess.run([pred], feed_dict={x: test_vid})
 '''
 Model 2:
 '''
+data_path = args.home_dir
+os.chdir(data_path)
+print('Current directory:', os.getcwd())
+
 # Load model
 model = models.load_model(args.arch)
 
