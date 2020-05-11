@@ -52,7 +52,10 @@ if args.generate_data:
 				openpose_2person_count += 1
 				print(file)
 			frame_kps = []
-			pose_keypoints = data["people"][0]["pose_keypoints_2d"]
+			try: 
+				pose_keypoints = data["people"][0]["pose_keypoints_2d"]
+			except:
+				continue
 			j = 0
 			for i in range(36):
 				frame_kps.append(pose_keypoints[j])
