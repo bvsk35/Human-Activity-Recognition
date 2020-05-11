@@ -254,7 +254,7 @@ for i in range(0, 5):
 Save the Plots and JSON files
 '''
 if 'clapping' in temp or 'applauding' in temp:
-	timestamp = np.loadtxt(data_path + 'time_stamp.txt')
+	timestamp = np.loadtxt(args.video_json_path + 'time_stamp.txt')
 	v = np.squeeze(np.array(one_hot_predictions))
 	y = np.argmax(np.squeeze(v), axis=1)
 	y_plot = np.where(y!=5, 0, 1)
@@ -286,7 +286,7 @@ if 'clapping' in temp or 'applauding' in temp:
 	plt.title('All Labels')
 	plt.savefig('Test_2.jpeg')
 else:
-	timestamp = np.loadtxt(data_path + 'time_stamp.txt')
+	timestamp = np.loadtxt(args.video_json_path + 'time_stamp.txt')
 	v = np.squeeze(np.array(one_hot_predictions))
 	y = np.argmax(np.squeeze(v), axis=1)
 	y_plot = np.where(y!=5, 0, 1)
