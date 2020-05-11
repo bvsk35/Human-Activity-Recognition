@@ -29,7 +29,7 @@ parser.add_argument('--generate_data', help='Generate the data for test video', 
 args = parser.parse_args()
 
 # Generate the data
-if arg.generate_data:
+if args.generate_data:
 	'''
 	Extract Keypoints:
 	Extract x, y co-ordinates for all pose keypoints and all frames. 
