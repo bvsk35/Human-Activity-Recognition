@@ -107,6 +107,8 @@ if args.generate_data:
 	'''
 	Create time stamps
 	'''
+	# No. of timesteps per series
+	n_steps = 32 
 	file = open(args.video_json_path+'/data_point.txt', 'r')
 	temp = np.array([elem for elem in [row.split(',') for row in file]], dtype=np.float32)
 	file.close()
@@ -121,6 +123,10 @@ else:
 Running the tests on video
 Model 1:
 '''
+n_input = 36  # No. of input parameters per timestep
+n_hidden = 34 # Hidden layer num of features
+n_steps = 32 # No. of timesteps per series
+n_classes = 6 # No. of output classes/labels
 LABELS = [    
 	"JUMPING",
 	"JUMPING_JACKS",
@@ -179,7 +185,7 @@ test_path = args.load
 sess = tf_reset()
 
 # Graph input/output
-x = tf.placeholder(tf.float32, [None, n_steps, n_input], name='x')
+x = tf.placeholder(tf.float32, [None, 32, n_input], name='x')
 y = tf.placeholder(tf.float32, [None, n_classes], name='y')
 
 # Graph weights
