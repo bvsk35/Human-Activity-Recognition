@@ -295,16 +295,6 @@ else:
 			y_plot.append(1)
 		else:
 			y_plot.append(0)
-	# y_plot = np.where(y!=5, 0, 1)
-	# aidx = np.where(y==1)[0]
-	# for i in aidx:
-	# 	if i == 0:
-	# 		y_plot[i+1] = 1 if y_plot[i+1] == 0 else y_plot[i+1]
-	# 	elif (i+1) == len(y_plot):
-	# 		y_plot[i] = 1 if y_plot[i] == 0 else y_plot[i]
-	# 	else:
-	# 		y_plot[i-1] = 1 if y_plot[i-1] == 0 else y_plot[i-1]
-	# 		y_plot[i+1] = 1 if y_plot[i+1] == 0 else y_plot[i+1]
 	temp_1 = np.concatenate((timestamp.reshape((-1, 1)), y.reshape((-1, 1))), axis=1)
 	action = ["Detect Clapping Hands"]
 	with open('test_video_out.json', 'w') as json_file:
