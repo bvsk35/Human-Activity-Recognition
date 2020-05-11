@@ -256,66 +256,37 @@ for i in range(0, 5):
 '''
 Save the Plots and JSON files
 '''
-if 'clapping' in temp or 'applauding' in temp:
-	timestamp = np.loadtxt(args.video_json_path + '/time_stamp.txt')
-	v = np.squeeze(np.array(one_hot_predictions))
-	y = np.argmax(np.squeeze(v), axis=1)
-	y_plot = np.where(y!=5, 0, 1)
-	aidx = np.where(y==1)[0]
-	for i in aidx:
-		if i == 0:
-			y_plot[i+1] = 1 if y_plot[i+1] == 0 else y_plot[i+1]
-		elif (i+1) == len(y_plot):
-			y_plot[i] = 1 if y_plot[i] == 0 else y_plot[i]
-		else:
-			y_plot[i-1] = 1 if y_plot[i-1] == 0 else y_plot[i-1]
-			y_plot[i+1] = 1 if y_plot[i+1] == 0 else y_plot[i+1]
-	temp_1 = np.concatenate((timestamp.reshape((-1, 1)), y.reshape((-1, 1))), axis=1)
-	action = ["Detect Clapping Hands"]
-	with open('test_video_out.json', 'w') as json_file:
-	  json.dump(action, json_file)
-	  json.dump(LABELS, json_file)
-	  json.dump(temp_1.T.tolist(), json_file)
+timestamp = np.loadtxt(args.video_json_path + '/time_stamp.txt')
+v = np.squeeze(np.array(one_hot_predictions))
+y = np.argmax(np.squeeze(v), axis=1)
+y_plot = np.where(y!=5, 0, 1)
+aidx = np.where(y==0)[0]
+for i in aidx:
+	if i == 0:
+		y_plot[i+1] = 0 if y_plot[i+1] == 1 else y_plot[i+1]
+	elif (i+1) == len(y_plot):
+		y_plot[i] = 0 if y_plot[i] == 1 else y_plot[i]
+	else:
+		y_plot[i-1] = 0 if y_plot[i-1] == 1 else y_plot[i-1]
+		y_plot[i+1] = 0 if y_plot[i+1] == 1 else y_plot[i+1]
+temp_1 = np.concatenate((timestamp.reshape((-1, 1)), y.reshape((-1, 1))), axis=1)
+action = ["Detect Clapping Hands"]
+with open('test_video_out.json', 'w') as json_file:
+  json.dump(action, json_file)
+  json.dump(LABELS, json_file)
+  json.dump(temp_1.T.tolist(), json_file)
 
-	plt.plot(timestamp, y_plot)
-	plt.xlabel(r'Time stamps $\rightarrow$')
-	plt.ylabel(r'Labels $\rightarrow$')
-	plt.title('Label 0: No Clapping and Label 1: Clapping')
-	plt.savefig('Test_1.jpeg')
+plt.plot(timestamp, y_plot)
+plt.xlabel(r'Time stamps $\rightarrow$')
+plt.ylabel(r'Labels $\rightarrow$')
+plt.title('Label 0: No Clapping and Label 1: Clapping')
+plt.savefig('Test_1.jpeg')
 
-	plt.plot(timestamp, y, '.')
-	plt.xlabel(r'Time stamps $\rightarrow$')
-	plt.ylabel(r'Labels $\rightarrow$')
-	plt.title('All Labels')
-	plt.savefig('Test_2.jpeg')
-else:
-	timestamp = np.loadtxt(args.video_json_path + '/time_stamp.txt')
-	v = np.squeeze(np.array(one_hot_predictions))
-	y = np.argmax(np.squeeze(v), axis=1)
-	y_plot = []
-	for i in y:
-		if i==3 or i==4 or i==5:
-			y_plot.append(1)
-		else:
-			y_plot.append(0)
-	temp_1 = np.concatenate((timestamp.reshape((-1, 1)), y.reshape((-1, 1))), axis=1)
-	action = ["Detect Clapping Hands"]
-	with open('test_video_out.json', 'w') as json_file:
-	  json.dump(action, json_file)
-	  json.dump(LABELS, json_file)
-	  json.dump(temp_1.T.tolist(), json_file)
-
-	plt.plot(timestamp, y_plot)
-	plt.xlabel(r'Time stamps $\rightarrow$')
-	plt.ylabel(r'Labels $\rightarrow$')
-	plt.title('Label 0: No Clapping and Label 1: Clapping')
-	plt.savefig('Test_1.jpeg')
-
-	plt.plot(timestamp, y, '.')
-	plt.xlabel(r'Time stamps $\rightarrow$')
-	plt.ylabel(r'Labels $\rightarrow$')
-	plt.title('All Labels')
-	plt.savefig('Test_2.jpeg')
+plt.plot(timestamp, y, '.')
+plt.xlabel(r'Time stamps $\rightarrow$')
+plt.ylabel(r'Labels $\rightarrow$')
+plt.title('All Labels')
+plt.savefig('Test_2.jpeg')
 
 
 
