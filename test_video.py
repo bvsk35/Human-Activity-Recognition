@@ -110,7 +110,7 @@ if args.generate_data:
 	file = open(args.video_json_path+'/data_point.txt', 'r')
 	temp = np.array([elem for elem in [row.split(',') for row in file]], dtype=np.float32)
 	file.close()
-	blocks = int(len(temp) / n_steps)
+	blocks = int(len(temp)/32)
 	temp = np.array(np.split(temp,blocks))
 	a = np.linspace(0, np.around(len(kps)/32), temp.shape[0])
 	np.savetxt('time_stamp.txt', a)
