@@ -228,7 +228,7 @@ transform = models.load_transform()
 
 # Obtain video frames
 print('Extracting frames using ffmpeg...')
-frames = extract_frames(args.video_file, args.num_segments)
+frames = extract_frames(args.video_path, args.num_segments)
 
 
 # Prepare input tensor
