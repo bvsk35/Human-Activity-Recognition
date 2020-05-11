@@ -21,7 +21,16 @@ I have also worked on generating optical flow for the HMDB dataset in the plan o
 #### Sample Optical Flow Gif
 ![Sample Optical Flow](https://github.com/bvsk35/Human-Activity-Recognition/blob/master/images/Sample%20Optical.gif)
 ### How to generate data from a sample video and do prediction
-`ABCD`
+- First run `OpenPose` on the sample test video and keep all the `.json` file in floder. Let path for this folder be `VIDEO_JSON_PATH`. To run openpose please read the `utlis` folder where the code has been provided. 
+- Download all the weights from the google drive and copy them in the folder. Let path for this folder be `LOAD`. 
+- **Note:** Keep following files `moments_RGB_imagenet_resnet3d50_segment16.pth.tar` and `moments_RGB_resnet50_imagenetpretrained.pth.tar` in the path where the `test_video.py` or `test_video_1.py` file is. Let path for the `test_video.py` file be `HOME_DIR`.
+- Let the path for the sample test video be `VIDEO_PATH`. 
+
+There are additional arugments with which you can run the code but for now leave them to default. Finally to run the test code for clapping videos run the following command:
+`! python test_video.py --home_dir HOME_DIR --load LOAD --video_path VIDEO_PATH --video_json_path VIDEO_JSON_PATH`
+
+To run the test code for non-clapping video run the following command:
+`! python test_video_1.py --home_dir HOME_DIR --load LOAD --video_path VIDEO_PATH --video_json_path VIDEO_JSON_PATH`
 ### Results
 #### Accuracy on Test set: ~99%
 ![Accuracy](images/Project%20Submission%208/Acc1.jpeg)
