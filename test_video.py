@@ -294,7 +294,7 @@ else:
 		if i==3 or i==4 or i==5:
 			y_plot.append(1)
 		else:
-			y_plot(0)
+			y_plot.append(0)
 	# y_plot = np.where(y!=5, 0, 1)
 	# aidx = np.where(y==1)[0]
 	# for i in aidx:
