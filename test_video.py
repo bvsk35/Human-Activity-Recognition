@@ -289,7 +289,22 @@ else:
 	timestamp = np.loadtxt(args.video_json_path + '/time_stamp.txt')
 	v = np.squeeze(np.array(one_hot_predictions))
 	y = np.argmax(np.squeeze(v), axis=1)
-	y_plot = np.where(y!=5, 0, 1)
+	y_plot = []
+	for i in y:
+		if i==3 or i==4 or i==5:
+			y_plot.append(1)
+		else:
+			y_plot(0)
+	# y_plot = np.where(y!=5, 0, 1)
+	# aidx = np.where(y==1)[0]
+	# for i in aidx:
+	# 	if i == 0:
+	# 		y_plot[i+1] = 1 if y_plot[i+1] == 0 else y_plot[i+1]
+	# 	elif (i+1) == len(y_plot):
+	# 		y_plot[i] = 1 if y_plot[i] == 0 else y_plot[i]
+	# 	else:
+	# 		y_plot[i-1] = 1 if y_plot[i-1] == 0 else y_plot[i-1]
+	# 		y_plot[i+1] = 1 if y_plot[i+1] == 0 else y_plot[i+1]
 	temp_1 = np.concatenate((timestamp.reshape((-1, 1)), y.reshape((-1, 1))), axis=1)
 	action = ["Detect Clapping Hands"]
 	with open('test_video_out.json', 'w') as json_file:
